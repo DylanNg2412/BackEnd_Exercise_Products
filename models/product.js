@@ -2,12 +2,22 @@ const mongoose = require("mongoose");
 const { Schema, model } = mongoose;
 
 const productSchema = new Schema({
-  name: { type: String, require: true },
-  description: { type: String },
-  price: { type: Number, require: true },
-  category: { type: String, require: true },
+  name: {
+    type: String,
+    required: true,
+  },
+  description: String,
+  price: {
+    type: Number,
+    required: true,
+  },
+  category: {
+    type: Schema.Types.ObjectId,
+    ref: "Category",
+    required: true,
+  },
+  image: String,
 });
 
-// convert the schema to a model
 const Product = model("Product", productSchema);
 module.exports = Product;

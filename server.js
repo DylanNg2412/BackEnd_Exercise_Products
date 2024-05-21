@@ -1,16 +1,42 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 
+// create the express app
 const app = express();
 
+// middleware to handle JSON request
 app.use(express.json());
 
-//Routes
-const productRouter = require("./routes/product");
-const categoryRouter = require("./routes/categories");
+// set the uploads folder as a static path
+app.use("/uploads", express.static("uploads"));
 
-app.use("/products", productRouter);
-app.use("/categories", categoryRouter);
+// middleware to setup a CORS policy
+const corsHandler = cors({
+  origin: "*",
+  methods: "GET,PUT,POST,DELETE",
+  allowedHeaders: ["Content-Type", "Authorization"],
+  preflightContinue: true,
+  optionsSuccessStatus: 200,
+});
+
+// apply the CORS to middleware
+app.use(corsHandler);
+
+//Routes
+const productRoute = require("./routes/product");
+const categoriesRoute = require("./routes/category");
+const ordersRoute = require("./routes/order");
+const paymentRoute = require("./routes/payment");
+const imagesRoute = require("./routes/image");
+const userRoute = require("./routes/user");
+
+app.use("/products", productRoute);
+app.use("/categories", categoriesRoute);
+app.use("/orders", ordersRoute);
+app.use("/payment", paymentRoute);
+app.use("/images", imagesRoute);
+app.use("/users", userRoute);
 
 mongoose
   .connect("mongodb://127.0.0.1:27017/ecommerce")
