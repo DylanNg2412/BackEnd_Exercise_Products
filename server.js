@@ -2,6 +2,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
+const { MONGODB_URL } = require("./config");
+
 // create the express app
 const app = express();
 
@@ -39,7 +41,7 @@ app.use("/images", imagesRoute);
 app.use("/users", userRoute);
 
 mongoose
-  .connect("mongodb://127.0.0.1:27017/ecommerce")
+  .connect(MONGODB_URL + "ecommerce")
   .then(() => {
     console.log("MongoDB connected");
   })

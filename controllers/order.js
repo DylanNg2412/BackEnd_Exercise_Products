@@ -12,6 +12,8 @@ const axios = require("axios");
 //load all models
 const Order = require("../models/order");
 
+const { FRONTEND_URL } = require("../config");
+
 // load data from config
 const {
   BILLPLZ_API_URL,
@@ -62,8 +64,8 @@ const addNewOrder = async (
       name: customerName,
       amount: parseFloat(totalPrice) * 100, // since we don't know if (totalPrice) is a string, therefore we use parseFloat to make it into an integer
       description: "Payment for order",
-      callback_url: "http://localhost:3000/verify-payment",
-      redirect_url: "http://localhost:3000/verify-payment",
+      callback_url: FRONTEND_URL + "verify-payment",
+      redirect_url: FRONTEND_URL + "verify-payment",
     },
   });
 
